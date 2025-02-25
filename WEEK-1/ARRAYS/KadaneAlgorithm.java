@@ -12,10 +12,11 @@ class KadaneAlgorithm{
                 sum = 0;
             }
         }
+        maxsum = Math.max(maxsum,sum);
         return maxsum;
     }
     public static void main(String[] args){
-        int[] arr = {1,2,-3,-5,2,-5,7,9,-1};
+        int[] arr = {1,2,-3,-5,2,5,7,-1,-2};
         System.out.print(kadaneAlgorithm(arr));
     }
 }
