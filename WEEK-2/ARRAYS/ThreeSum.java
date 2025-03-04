@@ -32,5 +32,5 @@ public class ThreeSum {
  * example: Input: nums = [-1,0,1,2,-1,-4]
  *         Output: [[-1,-1,2],[-1,0,1]]
  *     Explanation: Because the sum of the triplets is zero.
- * github commit message using implement a Three Sum problem
+ * 
  */

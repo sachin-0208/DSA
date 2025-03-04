@@ -46,5 +46,5 @@ public class LongestIncreasingPath {
     * time complexity: O(m*n)
     * space complexity: O(m*n)
     * optimal approach: Dynamic Programming
-    github commit messgae using implement Longest Increasing Path in a Matrix
+
  */
