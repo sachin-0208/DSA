@@ -1,0 +1,192 @@
+DFS is a powerful technique used in a variety of matrix/grid-based problems. The recursive approach you mentioned is particularly useful in problems that involve connected components, pathfinding, and traversal of a matrix as a graph.
+
+Where is this approach used?
+DFS is widely used in matrix-based problems such as:
+
+1. Number of Islands (Leetcode 200)
+Problem: Given a grid of '1's (land) and '0's (water), count the number of disconnected islands.
+How DFS Helps?
+Use DFS to traverse all connected '1's (land) in all four directions.
+Mark visited cells to avoid counting the same island twice.
+Implementation:
+
+java
+Copy
+Edit
+class NumberOfIslands {
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0) return 0;
+        int rows = grid.length, cols = grid[0].length;
+        boolean[][] visited = new boolean[rows][cols];
+        int count = 0;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == '1' && !visited[i][j]) {
+                    dfs(grid, i, j, visited);
+                    count++;  // Finished exploring one island
+                }
+            }
+        }
+        return count;
+    }
+
+    private void dfs(char[][] grid, int i, int j, boolean[][] visited) {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '0' || visited[i][j]) {
+            return;
+        }
+
+        visited[i][j] = true;
+
+        // Explore in 4 directions
+        dfs(grid, i + 1, j, visited);
+        dfs(grid, i - 1, j, visited);
+        dfs(grid, i, j + 1, visited);
+        dfs(grid, i, j - 1, visited);
+    }
+}
+Time Complexity: 
+𝑂
+(
+𝑚
+×
+𝑛
+)
+O(m×n) (Each cell is visited once)
+Space Complexity: 
+𝑂
+(
+𝑚
+×
+𝑛
+)
+O(m×n) (Worst case recursion stack)
+2. Flood Fill Algorithm (Leetcode 733)
+Problem: Given a grid and a starting cell, change all connected cells of the same color to a new color.
+How DFS Helps?
+Start at the given cell, spread recursively to neighboring cells of the same color.
+Use DFS to traverse all connected components.
+Implementation:
+
+java
+Copy
+Edit
+class FloodFill {
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        int oldColor = image[sr][sc];
+        if (oldColor != newColor) {
+            dfs(image, sr, sc, oldColor, newColor);
+        }
+        return image;
+    }
+
+    private void dfs(int[][] image, int i, int j, int oldColor, int newColor) {
+        if (i < 0 || i >= image.length || j < 0 || j >= image[0].length || image[i][j] != oldColor) {
+            return;
+        }
+
+        image[i][j] = newColor;
+
+        // Explore in 4 directions
+        dfs(image, i + 1, j, oldColor, newColor);
+        dfs(image, i - 1, j, oldColor, newColor);
+        dfs(image, i, j + 1, oldColor, newColor);
+        dfs(image, i, j - 1, oldColor, newColor);
+    }
+}
+Time Complexity: 
+𝑂
+(
+𝑚
+×
+𝑛
+)
+O(m×n)
+Space Complexity: 
+𝑂
+(
+𝑚
+×
+𝑛
+)
+O(m×n) (Recursion stack in worst case)
+3. Word Search (Leetcode 79)
+Problem: Given a grid of characters, check if a word exists by moving in four directions.
+How DFS Helps?
+Start at any cell matching the first letter.
+Use DFS to explore in all four directions, keeping track of visited paths.
+Implementation:
+
+java
+Copy
+Edit
+class WordSearch {
+    public boolean exist(char[][] board, String word) {
+        int rows = board.length, cols = board[0].length;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (dfs(board, word, i, j, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean dfs(char[][] board, String word, int i, int j, int index) {
+        if (index == word.length()) return true; // Found full word
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || board[i][j] != word.charAt(index)) {
+            return false;
+        }
+
+        // Temporarily mark the cell
+        char temp = board[i][j];
+        board[i][j] = '#';
+
+        boolean found = dfs(board, word, i + 1, j, index + 1) ||
+                       dfs(board, word, i - 1, j, index + 1) ||
+                       dfs(board, word, i, j + 1, index + 1) ||
+                       dfs(board, word, i, j - 1, index + 1);
+
+        // Restore the cell
+        board[i][j] = temp;
+        return found;
+    }
+}
+Time Complexity: 
+𝑂
+(
+𝑚
+×
+𝑛
+×
+4
+𝑘
+)
+O(m×n×4 
+k
+ ) (Exponential in worst case)
+Space Complexity: 
+𝑂
+(
+𝑘
+)
+O(k) (Recursion depth)
+How to use DFS effectively?
+Know when to use DFS:
+
+When dealing with grid traversal or connected components.
+When you need to explore all possibilities (like paths or regions).
+Choose between recursive and iterative DFS:
+
+Recursive: Easier to implement, but can cause stack overflow on large grids.
+Iterative (using Stack): Safer but requires managing the stack manually.
+Use a visited set or modify the grid itself:
+
+If modifying the grid is allowed, mark cells as visited using a placeholder ('#' or -1).
+Otherwise, use a separate boolean visited array.
+Optimize where possible:
+
+Early stopping: If solving a problem like Word Search, return true immediately when found.
+Pruning: If a path is invalid, return early to reduce unnecessary recursion.
