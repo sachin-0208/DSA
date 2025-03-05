@@ -1,0 +1,494 @@
+1️⃣ GCD (Greatest Common Divisor) / HCF (Highest Common Factor)
+Using Euclidean Algorithm (Efficient)
+java
+Copy
+Edit
+class Solution {
+    public int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+    
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.gcd(48, 18)); // Output: 6
+    }
+}
+✅ Time Complexity: O(log(min(a, b)))
+
+2️⃣ LCM (Least Common Multiple)
+Using Formula: LCM(a, b) = (a * b) / GCD(a, b)
+java
+Copy
+Edit
+class Solution {
+    public int lcm(int a, int b) {
+        return (a / gcd(a, b)) * b;
+    }
+
+    private int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+    
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.lcm(12, 15)); // Output: 60
+    }
+}
+✅ Time Complexity: O(log(min(a, b)))
+
+3️⃣ Check if a Number is Prime
+Optimized Approach (√N complexity)
+java
+Copy
+Edit
+class Solution {
+    public boolean isPrime(int n) {
+        if (n < 2) return false;
+        if (n == 2 || n == 3) return true;
+        if (n % 2 == 0 || n % 3 == 0) return false;
+        
+        for (int i = 5; i * i <= n; i += 6) {
+            if (n % i == 0 || n % (i + 2) == 0) return false;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.isPrime(29)); // Output: true
+    }
+}
+✅ Time Complexity: O(√N)
+
+4️⃣ Prime Factorization
+Efficient Prime Factorization Using Trial Division
+java
+Copy
+Edit
+import java.util.*;
+
+class Solution {
+    public List<Integer> primeFactors(int n) {
+        List<Integer> factors = new ArrayList<>();
+        
+        while (n % 2 == 0) {
+            factors.add(2);
+            n /= 2;
+        }
+        
+        for (int i = 3; i * i <= n; i += 2) {
+            while (n % i == 0) {
+                factors.add(i);
+                n /= i;
+            }
+        }
+        
+        if (n > 1) factors.add(n);
+        
+        return factors;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.primeFactors(84)); // Output: [2, 2, 3, 7]
+    }
+}
+✅ Time Complexity: O(√N)
+
+5️⃣ Find All Prime Numbers Up to N (Sieve of Eratosthenes)
+Efficient Approach for Finding All Primes ≤ N
+java
+Copy
+Edit
+import java.util.*;
+
+class Solution {
+    public List<Integer> sieveOfEratosthenes(int n) {
+        boolean[] isPrime = new boolean[n + 1];
+        Arrays.fill(isPrime, true);
+        isPrime[0] = isPrime[1] = false;
+
+        for (int i = 2; i * i <= n; i++) {
+            if (isPrime[i]) {
+                for (int j = i * i; j <= n; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+
+        List<Integer> primes = new ArrayList<>();
+        for (int i = 2; i <= n; i++) {
+            if (isPrime[i]) primes.add(i);
+        }
+        return primes;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.sieveOfEratosthenes(30)); // Output: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+    }
+}
+✅ Time Complexity: O(N log log N)
+
+6️⃣ Count Total Divisors of a Number
+java
+Copy
+Edit
+class Solution {
+    public int countDivisors(int n) {
+        int count = 0;
+        for (int i = 1; i * i <= n; i++) {
+            if (n % i == 0) {
+                count += (i * i == n) ? 1 : 2;
+            }
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.countDivisors(36)); // Output: 9 (1, 2, 3, 4, 6, 9, 12, 18, 36)
+    }
+}
+✅ Time Complexity: O(√N)
+
+7️⃣ Find All Divisors of a Number
+java
+Copy
+Edit
+import java.util.*;
+
+class Solution {
+    public List<Integer> allDivisors(int n) {
+        List<Integer> divisors = new ArrayList<>();
+        for (int i = 1; i * i <= n; i++) {
+            if (n % i == 0) {
+                divisors.add(i);
+                if (i != n / i) divisors.add(n / i);
+            }
+        }
+        Collections.sort(divisors);
+        return divisors;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.allDivisors(36)); // Output: [1, 2, 3, 4, 6, 9, 12, 18, 36]
+    }
+}
+✅ Time Complexity: O(√N)
+
+8️⃣ Check if a Number is a Power of 2
+java
+Copy
+Edit
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.isPowerOfTwo(16)); // Output: true
+    }
+}
+✅ Time Complexity: O(1)
+
+9️⃣ Find Modular Exponentiation (a^b % mod)
+java
+Copy
+Edit
+class Solution {
+    public long powerMod(long a, long b, int mod) {
+        long result = 1;
+        while (b > 0) {
+            if ((b & 1) == 1) result = (result * a) % mod;
+            a = (a * a) % mod;
+            b >>= 1;
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.powerMod(2, 10, 1000000007)); // Output: 1024
+    }
+}
+✅ Time Complexity: O(log B)
+
+🔥 Summary of Key Concepts
+Concept	Method	Time Complexity
+GCD / HCF	Euclidean Algorithm	O(log min(a, b))
+LCM	(a * b) / GCD(a, b)	O(log min(a, b))
+Prime Check	Trial division	O(√N)
+Prime Factors	Divide by primes	O(√N)
+Find Primes ≤ N	Sieve of Eratosthenes	O(N log log N)
+Find Divisors	Brute force	O(√N)
+Power Modulo	Binary exponentiation	O(log B)
+These are all fundamental algorithms for number theory in Java. 🚀 Let me know if you need more explanations! 😊
+
+
+
+
+
+
+
+You said:
+next 10 for things like co prime , good number etc
+ChatGPT said:
+Here are 10 more important number theory concepts with Java code, including co-prime numbers, good numbers, and more! 🚀
+
+1️⃣ Check if Two Numbers are Co-Prime (GCD = 1)
+java
+Copy
+Edit
+class Solution {
+    public boolean isCoPrime(int a, int b) {
+        return gcd(a, b) == 1;
+    }
+
+    private int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.isCoPrime(8, 15)); // Output: true
+    }
+}
+✅ Time Complexity: O(log min(a, b))
+
+2️⃣ Check if a Number is a "Good Number"
+(A Good Number is one where every even-positioned digit is even, and every odd-positioned digit is odd.)
+
+java
+Copy
+Edit
+class Solution {
+    public boolean isGoodNumber(int n) {
+        String s = String.valueOf(n);
+        for (int i = 0; i < s.length(); i++) {
+            int digit = s.charAt(i) - '0';
+            if ((i % 2 == 0 && digit % 2 != 0) || (i % 2 == 1 && digit % 2 != 1)) return false;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.isGoodNumber(2468)); // Output: true
+    }
+}
+✅ Time Complexity: O(log N)
+
+3️⃣ Count the Number of Co-Prime Pairs in an Array
+java
+Copy
+Edit
+class Solution {
+    public int countCoPrimePairs(int[] nums) {
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (gcd(nums[i], nums[j]) == 1) count++;
+            }
+        }
+        return count;
+    }
+
+    private int gcd(int a, int b) {
+        return b == 0 ? a : gcd(b, a % b);
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        int[] nums = {3, 5, 7, 9};
+        System.out.println(sol.countCoPrimePairs(nums)); // Output: 6
+    }
+}
+✅ Time Complexity: O(N² log M) (M is max element)
+
+4️⃣ Sum of Digits of a Number
+java
+Copy
+Edit
+class Solution {
+    public int sumOfDigits(int n) {
+        int sum = 0;
+        while (n > 0) {
+            sum += n % 10;
+            n /= 10;
+        }
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.sumOfDigits(1234)); // Output: 10
+    }
+}
+✅ Time Complexity: O(log N)
+
+5️⃣ Check if a Number is Armstrong Number
+(A number is Armstrong if the sum of its digits each raised to the power of its length equals the number.)
+
+java
+Copy
+Edit
+class Solution {
+    public boolean isArmstrong(int n) {
+        int sum = 0, temp = n, len = String.valueOf(n).length();
+        while (temp > 0) {
+            sum += Math.pow(temp % 10, len);
+            temp /= 10;
+        }
+        return sum == n;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.isArmstrong(153)); // Output: true
+    }
+}
+✅ Time Complexity: O(log N)
+
+6️⃣ Reverse a Number
+java
+Copy
+Edit
+class Solution {
+    public int reverseNumber(int n) {
+        int rev = 0;
+        while (n > 0) {
+            rev = rev * 10 + n % 10;
+            n /= 10;
+        }
+        return rev;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.reverseNumber(1234)); // Output: 4321
+    }
+}
+✅ Time Complexity: O(log N)
+
+7️⃣ Check if a Number is a Palindrome
+(A palindrome number reads the same forward and backward.)
+
+java
+Copy
+Edit
+class Solution {
+    public boolean isPalindrome(int n) {
+        return n == reverseNumber(n);
+    }
+
+    private int reverseNumber(int n) {
+        int rev = 0;
+        while (n > 0) {
+            rev = rev * 10 + n % 10;
+            n /= 10;
+        }
+        return rev;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.isPalindrome(1221)); // Output: true
+    }
+}
+✅ Time Complexity: O(log N)
+
+8️⃣ Find the N-th Fibonacci Number (Using Recursion)
+java
+Copy
+Edit
+class Solution {
+    public int fibonacci(int n) {
+        if (n <= 1) return n;
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.fibonacci(10)); // Output: 55
+    }
+}
+✅ Time Complexity: O(2ⁿ) (Exponential, inefficient for large n)
+
+9️⃣ Find the N-th Fibonacci Number (Using Iteration - Efficient)
+java
+Copy
+Edit
+class Solution {
+    public int fibonacci(int n) {
+        if (n <= 1) return n;
+        int a = 0, b = 1;
+        for (int i = 2; i <= n; i++) {
+            int temp = a + b;
+            a = b;
+            b = temp;
+        }
+        return b;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.fibonacci(10)); // Output: 55
+    }
+}
+✅ Time Complexity: O(N)
+
+🔟 Find the Sum of the First N Fibonacci Numbers
+java
+Copy
+Edit
+class Solution {
+    public int sumOfFibonacci(int n) {
+        if (n <= 0) return 0;
+        int a = 0, b = 1, sum = 1;
+        for (int i = 2; i < n; i++) {
+            int temp = a + b;
+            sum += temp;
+            a = b;
+            b = temp;
+        }
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        System.out.println(sol.sumOfFibonacci(5)); // Output: 7 (0+1+1+2+3)
+    }
+}
+✅ Time Complexity: O(N)
+
+🔥 Summary of Key Concepts
+Concept	Method	Time Complexity
+Co-Prime Check	GCD(a, b) == 1	O(log min(a, b))
+Good Number Check	Digit-wise checking	O(log N)
+Count Co-Prime Pairs	Brute-force with GCD	O(N² log M)
+Sum of Digits	Iterative sum	O(log N)
+Armstrong Number	Power sum of digits	O(log N)
+Reverse Number	Iterative division	O(log N)
+Palindrome Check	Reverse & compare	O(log N)
+Nth Fibonacci (Recursion)	Recursive	O(2ⁿ) (Exponential)
+Nth Fibonacci (Iterative)	Iterative loop	O(N)
+Sum of Fibonacci Numbers	Iterative sum	O(N)
+🚀 These cover co-prime, good numbers, Fibonacci, Armstrong numbers, and more! Let me know if you need more number theory concepts! 😊
