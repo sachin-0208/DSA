@@ -1,192 +1,102 @@
-DFS is a powerful technique used in a variety of matrix/grid-based problems. The recursive approach you mentioned is particularly useful in problems that involve connected components, pathfinding, and traversal of a matrix as a graph.
+**Depth-First Search (DFS) in Matrix-Based Problems**
 
-Where is this approach used?
-DFS is widely used in matrix-based problems such as:
+## Overview
+Depth-First Search (DFS) is a fundamental algorithm used for exploring and traversing graphs and matrices. It is particularly useful in matrix-related problems that involve connectivity, pathfinding, and component analysis. DFS can be implemented using either recursion or an explicit stack (iterative approach).
 
-1. Number of Islands (Leetcode 200)
-Problem: Given a grid of '1's (land) and '0's (water), count the number of disconnected islands.
-How DFS Helps?
-Use DFS to traverse all connected '1's (land) in all four directions.
-Mark visited cells to avoid counting the same island twice.
-Implementation:
+---
 
-java
-Copy
-Edit
-class NumberOfIslands {
-    public int numIslands(char[][] grid) {
-        if (grid == null || grid.length == 0) return 0;
-        int rows = grid.length, cols = grid[0].length;
-        boolean[][] visited = new boolean[rows][cols];
-        int count = 0;
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (grid[i][j] == '1' && !visited[i][j]) {
-                    dfs(grid, i, j, visited);
-                    count++;  // Finished exploring one island
-                }
-            }
-        }
-        return count;
+## **Basic Structure of DFS**
+### **Recursive DFS**
+```java
+void dfs(char[][] grid, int i, int j, boolean[][] visited) {
+    // Base case: Out of bounds or already visited
+    if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || visited[i][j]) {
+        return;
     }
 
-    private void dfs(char[][] grid, int i, int j, boolean[][] visited) {
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '0' || visited[i][j]) {
-            return;
+    // Mark the cell as visited
+    visited[i][j] = true;
+
+    // Explore in four directions (up, down, left, right)
+    dfs(grid, i + 1, j, visited); // Down
+    dfs(grid, i - 1, j, visited); // Up
+    dfs(grid, i, j + 1, visited); // Right
+    dfs(grid, i, j - 1, visited); // Left
+}
+```
+### **Iterative DFS (Using Stack)**
+```java
+import java.util.Stack;
+
+void dfs(char[][] grid, int startI, int startJ) {
+    int rows = grid.length, cols = grid[0].length;
+    boolean[][] visited = new boolean[rows][cols];
+    Stack<int[]> stack = new Stack<>();
+    
+    stack.push(new int[]{startI, startJ});
+
+    while (!stack.isEmpty()) {
+        int[] cell = stack.pop();
+        int i = cell[0], j = cell[1];
+
+        // Skip if out of bounds or already visited
+        if (i < 0 || i >= rows || j < 0 || j >= cols || visited[i][j]) {
+            continue;
         }
 
+        // Mark as visited
         visited[i][j] = true;
 
-        // Explore in 4 directions
-        dfs(grid, i + 1, j, visited);
-        dfs(grid, i - 1, j, visited);
-        dfs(grid, i, j + 1, visited);
-        dfs(grid, i, j - 1, visited);
+        // Push neighbors (right, left, down, up) onto stack
+        stack.push(new int[]{i, j + 1}); // Right
+        stack.push(new int[]{i, j - 1}); // Left
+        stack.push(new int[]{i + 1, j}); // Down
+        stack.push(new int[]{i - 1, j}); // Up
     }
 }
-Time Complexity: 
-𝑂
-(
-𝑚
-×
-𝑛
-)
-O(m×n) (Each cell is visited once)
-Space Complexity: 
-𝑂
-(
-𝑚
-×
-𝑛
-)
-O(m×n) (Worst case recursion stack)
-2. Flood Fill Algorithm (Leetcode 733)
-Problem: Given a grid and a starting cell, change all connected cells of the same color to a new color.
-How DFS Helps?
-Start at the given cell, spread recursively to neighboring cells of the same color.
-Use DFS to traverse all connected components.
-Implementation:
+```
 
-java
-Copy
-Edit
-class FloodFill {
-    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
-        int oldColor = image[sr][sc];
-        if (oldColor != newColor) {
-            dfs(image, sr, sc, oldColor, newColor);
-        }
-        return image;
-    }
+---
 
-    private void dfs(int[][] image, int i, int j, int oldColor, int newColor) {
-        if (i < 0 || i >= image.length || j < 0 || j >= image[0].length || image[i][j] != oldColor) {
-            return;
-        }
+## **Applications of DFS in Matrix Problems**
+### **1. Number of Islands (Leetcode 200)**
+- Problem: Count the number of disconnected islands in a grid.
+- Approach: Use DFS to traverse all connected '1's (land) and mark them as visited.
 
-        image[i][j] = newColor;
+### **2. Flood Fill Algorithm (Leetcode 733)**
+- Problem: Given an image represented as a 2D grid, replace all connected pixels of the same color starting from a given point.
+- Approach: Use DFS to propagate the new color to all adjacent matching pixels.
 
-        // Explore in 4 directions
-        dfs(image, i + 1, j, oldColor, newColor);
-        dfs(image, i - 1, j, oldColor, newColor);
-        dfs(image, i, j + 1, oldColor, newColor);
-        dfs(image, i, j - 1, oldColor, newColor);
-    }
-}
-Time Complexity: 
-𝑂
-(
-𝑚
-×
-𝑛
-)
-O(m×n)
-Space Complexity: 
-𝑂
-(
-𝑚
-×
-𝑛
-)
-O(m×n) (Recursion stack in worst case)
-3. Word Search (Leetcode 79)
-Problem: Given a grid of characters, check if a word exists by moving in four directions.
-How DFS Helps?
-Start at any cell matching the first letter.
-Use DFS to explore in all four directions, keeping track of visited paths.
-Implementation:
+### **3. Word Search (Leetcode 79)**
+- Problem: Given a board of characters, determine if a word exists by moving in four directions.
+- Approach: Use DFS with backtracking to explore all possible paths.
 
-java
-Copy
-Edit
-class WordSearch {
-    public boolean exist(char[][] board, String word) {
-        int rows = board.length, cols = board[0].length;
+---
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (dfs(board, word, i, j, 0)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+## **How to Use DFS Effectively**
+1. **Determine when DFS is applicable**  
+   - Useful for problems requiring connectivity, traversal, or pathfinding.
+   - Suitable for problems where an entire region needs to be explored.
 
-    private boolean dfs(char[][] board, String word, int i, int j, int index) {
-        if (index == word.length()) return true; // Found full word
-        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || board[i][j] != word.charAt(index)) {
-            return false;
-        }
+2. **Choose between recursive and iterative DFS**  
+   - Recursive DFS is simpler but may cause stack overflow for large inputs.
+   - Iterative DFS using an explicit stack avoids recursion depth issues.
 
-        // Temporarily mark the cell
-        char temp = board[i][j];
-        board[i][j] = '#';
+3. **Use a visited set or modify the grid**  
+   - If modifying the grid is allowed, marking visited cells with a placeholder (e.g., `'#'`) can optimize space.
+   - Otherwise, maintain a separate `boolean[][] visited` array.
 
-        boolean found = dfs(board, word, i + 1, j, index + 1) ||
-                       dfs(board, word, i - 1, j, index + 1) ||
-                       dfs(board, word, i, j + 1, index + 1) ||
-                       dfs(board, word, i, j - 1, index + 1);
+4. **Optimize where possible**  
+   - Use **early stopping** in search problems.
+   - Apply **pruning techniques** to cut unnecessary recursive calls.
 
-        // Restore the cell
-        board[i][j] = temp;
-        return found;
-    }
-}
-Time Complexity: 
-𝑂
-(
-𝑚
-×
-𝑛
-×
-4
-𝑘
-)
-O(m×n×4 
-k
- ) (Exponential in worst case)
-Space Complexity: 
-𝑂
-(
-𝑘
-)
-O(k) (Recursion depth)
-How to use DFS effectively?
-Know when to use DFS:
+---
 
-When dealing with grid traversal or connected components.
-When you need to explore all possibilities (like paths or regions).
-Choose between recursive and iterative DFS:
+## **Complexity Analysis**
+- **Time Complexity:** \( O(m \times n) \) in most cases, as each cell is visited once.
+- **Space Complexity:** \( O(m \times n) \) in recursive DFS (due to recursion stack) or \( O(m \times n) \) in iterative DFS (due to explicit stack or visited array).
 
-Recursive: Easier to implement, but can cause stack overflow on large grids.
-Iterative (using Stack): Safer but requires managing the stack manually.
-Use a visited set or modify the grid itself:
+---
 
-If modifying the grid is allowed, mark cells as visited using a placeholder ('#' or -1).
-Otherwise, use a separate boolean visited array.
-Optimize where possible:
+DFS is a powerful algorithm for solving various matrix-related problems efficiently. It provides a fundamental approach for exploring grids, graphs, and backtracking solutions. Understanding DFS and its applications enables solving many classical algorithmic challenges effectively.
 
-Early stopping: If solving a problem like Word Search, return true immediately when found.
-Pruning: If a path is invalid, return early to reduce unnecessary recursion.
