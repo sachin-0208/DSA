@@ -1,0 +1,177 @@
+**Commonly Used Logics & Tricks for Matrix Problems**
+
+## **1. Matrix Traversal Without Extra Space**
+- Instead of using an explicit `visited[][]` array, **modify the matrix itself** to mark visited cells.
+- Example: Use `-1`, `#`, or `Integer.MAX_VALUE` as markers for visited cells.
+
+```java
+if (matrix[i][j] == 1) {
+    matrix[i][j] = -1; // Mark as visited
+}
+```
+- Useful in problems like **Flood Fill, Number of Islands**.
+
+---
+
+## **2. Using a Single Loop to Traverse a 2D Matrix**
+- Instead of using nested loops, **convert 2D coordinates to 1D indexing**.
+
+```java
+for (int index = 0; index < rows * cols; index++) {
+    int i = index / cols; // Row index
+    int j = index % cols; // Column index
+    // Process matrix[i][j]
+}
+```
+- Useful when a **flat iteration** is needed over a matrix.
+
+---
+
+## **3. Directional Movement Using Arrays**
+- Avoid writing multiple conditions for up/down/left/right movements.
+
+```java
+int[] dRow = {-1, 1, 0, 0}; // Up, Down, Left, Right
+int[] dCol = {0, 0, -1, 1};
+
+for (int d = 0; d < 4; d++) {
+    int newRow = i + dRow[d];
+    int newCol = j + dCol[d];
+}
+```
+- Useful in **DFS/BFS traversal**.
+
+---
+
+## **4. Rotating a Matrix (90 Degrees Clockwise)**
+- Swap rows and columns, then reverse each row.
+
+```java
+// Transpose the matrix
+for (int i = 0; i < n; i++) {
+    for (int j = i; j < n; j++) {
+        int temp = matrix[i][j];
+        matrix[i][j] = matrix[j][i];
+        matrix[j][i] = temp;
+    }
+}
+// Reverse each row
+for (int i = 0; i < n; i++) {
+    Collections.reverse(Arrays.asList(matrix[i]));
+}
+```
+- Used in **image rotation, matrix transformations**.
+
+---
+
+## **5. Spiral Traversal of a Matrix**
+- Use four boundaries (top, bottom, left, right) and move accordingly.
+
+```java
+while (top <= bottom && left <= right) {
+    for (int i = left; i <= right; i++) result.add(matrix[top][i]);
+    top++;
+    for (int i = top; i <= bottom; i++) result.add(matrix[i][right]);
+    right--;
+    if (top <= bottom) {
+        for (int i = right; i >= left; i--) result.add(matrix[bottom][i]);
+        bottom--;
+    }
+    if (left <= right) {
+        for (int i = bottom; i >= top; i--) result.add(matrix[i][left]);
+        left++;
+    }
+}
+```
+- Used in **printing matrices in a spiral order**.
+
+---
+
+## **6. Zig-Zag Traversal of a Matrix**
+- Move diagonally up and down alternatively.
+
+```java
+for (int sum = 0; sum < rows + cols - 1; sum++) {
+    if (sum % 2 == 0) { // Move up
+        for (int i = Math.min(sum, rows - 1); i >= 0 && sum - i < cols; i--) {
+            result.add(matrix[i][sum - i]);
+        }
+    } else { // Move down
+        for (int i = Math.max(0, sum - cols + 1); i < rows && sum - i >= 0; i++) {
+            result.add(matrix[i][sum - i]);
+        }
+    }
+}
+```
+- Used in **matrix diagonal traversals**.
+
+---
+
+## **7. Checking Matrix Symmetry**
+```java
+boolean isSymmetric(int[][] matrix) {
+    int n = matrix.length;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < i; j++) {
+            if (matrix[i][j] != matrix[j][i]) return false;
+        }
+    }
+    return true;
+}
+```
+---
+
+## **8. Finding Saddle Point in a Matrix**
+```java
+for (int i = 0; i < rows; i++) {
+    int minRow = Integer.MAX_VALUE, colIndex = -1;
+    for (int j = 0; j < cols; j++) {
+        if (matrix[i][j] < minRow) {
+            minRow = matrix[i][j];
+            colIndex = j;
+        }
+    }
+    boolean isSaddle = true;
+    for (int k = 0; k < rows; k++) {
+        if (matrix[k][colIndex] > minRow) {
+            isSaddle = false;
+            break;
+        }
+    }
+    if (isSaddle) System.out.println("Saddle Point: " + minRow);
+}
+```
+---
+
+## **9. Fast Transposition of a Sparse Matrix**
+```java
+int[][] transpose(int[][] matrix) {
+    int rows = matrix.length, cols = matrix[0].length;
+    int[][] transposed = new int[cols][rows];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            transposed[j][i] = matrix[i][j];
+        }
+    }
+    return transposed;
+}
+```
+---
+
+## **10. Matrix Exponentiation for Fast Computation**
+```java
+int[][] matrixPower(int[][] matrix, int exp) {
+    int n = matrix.length;
+    int[][] result = new int[n][n];
+    for (int i = 0; i < n; i++) result[i][i] = 1; // Identity matrix
+    while (exp > 0) {
+        if ((exp & 1) == 1) result = multiplyMatrices(result, matrix);
+        matrix = multiplyMatrices(matrix, matrix);
+        exp >>= 1;
+    }
+    return result;
+}
+```
+
+
+

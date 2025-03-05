@@ -100,3 +100,87 @@ void dfs(char[][] grid, int startI, int startJ) {
 
 DFS is a powerful algorithm for solving various matrix-related problems efficiently. It provides a fundamental approach for exploring grids, graphs, and backtracking solutions. Understanding DFS and its applications enables solving many classical algorithmic challenges effectively.
 
+**10 Tricks, Tips & Points to Remember for DFS in Matrix Problems**
+
+## **1. Use Direction Arrays for Efficient Traversal**
+- Avoid writing multiple if-else conditions for movement.
+- Use direction arrays to handle all movements cleanly.
+```java
+int[] dRow = {-1, 1, 0, 0}; // Up, Down, Left, Right
+int[] dCol = {0, 0, -1, 1};
+```
+- Iterate through these arrays to move in all four directions.
+
+---
+
+## **2. Mark Visited Cells Instead of Using Extra Space**
+- Modify the matrix in place to avoid extra `visited[][]` space.
+- Example: Change visited cells to `-1` or `#`.
+```java
+matrix[i][j] = -1; // Mark as visited
+```
+
+---
+
+## **3. Use DFS with Recursion Limits**
+- Recursive DFS can lead to **StackOverflow** for large matrices.
+- Convert DFS to **iterative** using a stack to prevent deep recursion.
+```java
+Stack<int[]> stack = new Stack<>();
+stack.push(new int[]{startRow, startCol});
+while (!stack.isEmpty()) {
+    int[] cell = stack.pop();
+    int r = cell[0], c = cell[1];
+    // Process the cell
+}
+```
+
+---
+
+## **4. Detecting Cycles in a Grid DFS**
+- Use an extra `parent` parameter to track back edges.
+- If a DFS call reaches a visited cell **not equal to parent**, a cycle exists.
+
+---
+
+## **5. Handling Boundary Conditions Properly**
+- Always check for valid indices before accessing matrix elements.
+```java
+if (r < 0 || c < 0 || r >= rows || c >= cols) return;
+```
+
+---
+
+## **6. Use DFS for Island Counting & Connected Components**
+- DFS is useful for counting isolated components (e.g., **Number of Islands**).
+- Traverse all land (`1`s), mark as visited, and explore in 4 directions.
+
+---
+
+## **7. Convert Grid Problems to Graph Representation**
+- Treat each matrix cell as a graph node.
+- Edges exist between adjacent (valid) cells.
+
+---
+
+## **8. Optimizing DFS with Early Stopping**
+- If the answer is found, return early instead of unnecessary DFS calls.
+```java
+if (matrix[r][c] == target) return true;
+```
+
+---
+
+## **9. Handle Diagonal Movements if Needed**
+- Instead of just 4 directions, use 8-directional movement for certain problems.
+```java
+int[] dRow = {-1, -1, -1, 0, 1, 1, 1, 0};
+int[] dCol = {-1, 0, 1, 1, 1, 0, -1, -1};
+```
+
+---
+
+## **10. Be Aware of Time Complexity in Large Grids**
+- Avoid unnecessary recomputation using **memoization**.
+- Typical DFS complexity: **O(R × C)** for an R x C matrix.
+
