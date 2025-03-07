@@ -1,0 +1,76 @@
+Basic String Operations
+
+Immutable Strings – In Java, strings are immutable. Use StringBuilder for modifications.
+Concatenation Trick – Use StringBuilder instead of + to concatenate multiple strings efficiently.
+Comparing Strings – Use .equals() instead of == to compare string values in Java.
+Case Conversion – Use toLowerCase() and toUpperCase() for case-insensitive comparisons.
+Trimming Spaces – Use .trim() to remove leading/trailing spaces.
+Splitting Strings – Use .split(regex) for breaking a string based on a delimiter.
+Reversing a String – Convert to char[] and swap or use StringBuilder.reverse().
+Checking Substrings – Use .contains(), .indexOf(), or .startsWith()/.endsWith().
+String to Char Array – char[] arr = str.toCharArray(); for in-place modifications.
+Char Frequency Count – Use an int[256] array for quick frequency counting.
+
+
+Two Pointers & Sliding Window
+Palindrome Check – Use two pointers: one at the start, one at the end.
+Reverse Words in a String – Split, reverse, and join the words.
+Longest Substring Without Repeating Characters – Use a sliding window with a HashSet.
+Find Anagrams in a String – Use a sliding window with a frequency array.
+Check if Two Strings Are Anagrams – Sort both and compare, or use frequency arrays.
+Find Longest Palindromic Substring – Use expand-around-center technique.
+Check if a String is Rotation of Another – Concatenate s1 + s1 and check s2 inside it.
+Valid Parentheses – Use a stack to keep track of open brackets.
+Check If String Can Be Permuted to Form a Palindrome – At most one odd frequency count.
+Count and Say Problem – Use recursion or iterative expansion.
+
+
+Pattern Matching
+Check if String Follows a Pattern – Use a HashMap to map characters to words.
+Z-Algorithm for Pattern Searching – Efficient way to find pattern occurrences in O(n).
+KMP Algorithm for Pattern Searching – Uses LPS array for fast matching.
+Rabin-Karp Algorithm – Uses hash values to find patterns in O(n).
+Wildcard Matching (?, *) – Use dynamic programming.
+Regular Expression Matching – Use DP to match . and * efficiently.
+
+
+Substring & Subsequence Problems
+Find the Smallest Window Containing Another String – Use sliding window + frequency array.
+Find the Longest Common Subsequence (LCS) – Use dynamic programming.
+Check if One String is a Subsequence of Another – Use two-pointer approach.
+Longest Repeating Subsequence – Use DP similar to LCS with s1 == s2 but different index.
+Generate All Subsequences – Use recursion or bitwise representation.
+
+
+String Compression & Encoding
+Run-Length Encoding – Compress "aaabb" to "a3b2".
+Decode a Run-Length Encoded String – Reverse the compression logic.
+Longest Run of a Character in a String – Track max frequency while iterating.
+URL Encoding and Decoding – Replace spaces with %20 manually or use URLEncoder.encode().
+Count Binary Substrings – Count consecutive 0s and 1s in groups.
+
+
+Advanced String Transformations
+Remove Consecutive Duplicates – Use a stack to remove adjacent duplicates.
+Group Words with Same Characters – Use sorted strings as HashMap keys.
+Find Minimum Number of Steps to Make Two Strings Anagram – Count character differences.
+Find Longest Word in Dictionary That Can Be Formed by Deleting Characters – Use two-pointer technique.
+Check If Two Strings Are One Edit Distance Apart – Consider insert, delete, replace cases.
+
+
+Palindrome Variations
+Check If String Can Be Rearranged to a Palindrome – At most one character should have an odd count.
+Make String Palindrome with Minimum Insertions – Use DP or two-pointer technique.
+Find Palindromic Subsequences – Use DP for counting.
+
+
+Lexicographical and Sorting Tricks
+Find the Next Lexicographical Permutation – Use the next permutation algorithm.
+Sort Characters in a String – Convert to char array and sort.
+Find the Smallest Lexicographical Rotation – Use Booth’s Algorithm.
+Rearrange String So No Two Adjacent Characters Are Same – Use a max heap.
+
+
+Miscellaneous Tricks
+Find First Unique Character in a String – Use a HashMap or frequency array.
+Find All Possible Permutations of a String – Use backtracking.

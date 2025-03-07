@@ -1,0 +1,333 @@
+**Java String Tips & Tricks: Normal vs Optimized Code**
+
+---
+
+### **1️⃣ Reverse a String**
+**Normal Code:**
+```java
+String reverseString(String s) {
+    StringBuilder sb = new StringBuilder();
+    for (int i = s.length() - 1; i >= 0; i--) {
+        sb.append(s.charAt(i));
+    }
+    return sb.toString();
+}
+```
+**Optimized Code:**
+```java
+String reversed = new StringBuilder(s).reverse().toString();
+```
+
+---
+
+### **2️⃣ Check if a String is a Palindrome**
+**Normal Code:**
+```java
+boolean isPalindrome(String s) {
+    int n = s.length();
+    for (int i = 0; i < n / 2; i++) {
+        if (s.charAt(i) != s.charAt(n - i - 1)) {
+            return false;
+        }
+    }
+    return true;
+}
+```
+**Optimized Code:**
+```java
+boolean isPalindrome = new StringBuilder(s).reverse().toString().equals(s);
+```
+
+---
+
+### **3️⃣ Sort Characters in a String**
+**Normal Code:**
+```java
+String sortString(String s) {
+    char[] arr = s.toCharArray();
+    Arrays.sort(arr);
+    return new String(arr);
+}
+```
+**Optimized Code:**
+```java
+String sorted = new String(s.chars().sorted().toArray(), 0, s.length());
+```
+
+---
+
+### **4️⃣ Remove All Whitespace**
+**Normal Code:**
+```java
+String removeSpaces(String s) {
+    StringBuilder sb = new StringBuilder();
+    for (char c : s.toCharArray()) {
+        if (!Character.isWhitespace(c)) {
+            sb.append(c);
+        }
+    }
+    return sb.toString();
+}
+```
+**Optimized Code:**
+```java
+String noSpaces = s.replaceAll("\\s", "");
+```
+
+---
+
+### **5️⃣ Count Occurrences of a Character**
+**Normal Code:**
+```java
+int countChar(String s, char target) {
+    int count = 0;
+    for (char c : s.toCharArray()) {
+        if (c == target) count++;
+    }
+    return count;
+}
+```
+**Optimized Code:**
+```java
+long count = s.chars().filter(ch -> ch == 'a').count();
+```
+
+---
+
+### **6️⃣ Check if a String is Numeric**
+**Normal Code:**
+```java
+boolean isNumeric(String s) {
+    for (char c : s.toCharArray()) {
+        if (!Character.isDigit(c)) return false;
+    }
+    return true;
+}
+```
+**Optimized Code:**
+```java
+boolean isNumeric = s.chars().allMatch(Character::isDigit);
+```
+
+---
+
+### **7️⃣ Check if Two Strings are Anagrams**
+**Normal Code:**
+```java
+boolean isAnagram(String s1, String s2) {
+    if (s1.length() != s2.length()) return false;
+    char[] arr1 = s1.toCharArray();
+    char[] arr2 = s2.toCharArray();
+    Arrays.sort(arr1);
+    Arrays.sort(arr2);
+    return Arrays.equals(arr1, arr2);
+}
+```
+**Optimized Code:**
+```java
+boolean isAnagram = Arrays.equals(s1.chars().sorted().toArray(), s2.chars().sorted().toArray());
+```
+
+---
+
+### **8️⃣ Convert First Letter of Each Word to Uppercase**
+**Normal Code:**
+```java
+String toTitleCase(String s) {
+    String[] words = s.split(" ");
+    StringBuilder result = new StringBuilder();
+    for (String word : words) {
+        result.append(Character.toUpperCase(word.charAt(0)))
+              .append(word.substring(1))
+              .append(" ");
+    }
+    return result.toString().trim();
+}
+```
+**Optimized Code:**
+```java
+String titleCase = Arrays.stream(s.split(" "))
+                         .map(w -> Character.toUpperCase(w.charAt(0)) + w.substring(1))
+                         .collect(Collectors.joining(" "));
+```
+
+---
+
+### **9️⃣ Remove Duplicate Characters**
+**Normal Code:**
+```java
+String removeDuplicates(String s) {
+    Set<Character> seen = new LinkedHashSet<>();
+    for (char c : s.toCharArray()) {
+        seen.add(c);
+    }
+    StringBuilder sb = new StringBuilder();
+    for (char c : seen) {
+        sb.append(c);
+    }
+    return sb.toString();
+}
+```
+**Optimized Code:**
+```java
+String uniqueChars = s.chars().distinct()
+                      .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                      .toString();
+```
+
+---
+
+### **1️⃣0️⃣ Check if a String Contains Only Letters**
+**Normal Code:**
+```java
+boolean isAlphabetic(String s) {
+    for (char c : s.toCharArray()) {
+        if (!Character.isLetter(c)) return false;
+    }
+    return true;
+}
+```
+**Optimized Code:**
+```java
+boolean isAlphabetic = s.chars().allMatch(Character::isLetter);
+```
+
+---
+
+### **1️⃣1️⃣ Find the Most Frequent Character**
+**Normal Code:**
+```java
+char mostFrequent(String s) {
+    Map<Character, Integer> freqMap = new HashMap<>();
+    for (char c : s.toCharArray()) {
+        freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
+    }
+    return Collections.max(freqMap.entrySet(), Map.Entry.comparingByValue()).getKey();
+}
+```
+**Optimized Code:**
+```java
+char mostFrequent = s.chars()
+                     .mapToObj(c -> (char) c)
+                     .collect(Collectors.groupingBy(c -> c, Collectors.counting()))
+                     .entrySet().stream()
+                     .max(Map.Entry.comparingByValue())
+                     .get().getKey();
+```
+
+---
+
+--------------------
+
+### **1️⃣ Find the Frequency of Each Character in a String**
+**Normal Code:**
+```java
+Map<Character, Integer> charFrequency(String s) {
+    Map<Character, Integer> freqMap = new HashMap<>();
+    for (char c : s.toCharArray()) {
+        freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
+    }
+    return freqMap;
+}
+```
+**Optimized Code:**
+```java
+Map<Character, Long> freqMap = s.chars()
+    .mapToObj(c -> (char) c)
+    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+```
+
+---
+
+### **2️⃣ Convert a String to Camel Case**
+**Normal Code:**
+```java
+String toCamelCase(String s) {
+    String[] words = s.split(" ");
+    StringBuilder result = new StringBuilder(words[0].toLowerCase());
+    for (int i = 1; i < words.length; i++) {
+        result.append(Character.toUpperCase(words[i].charAt(0)))
+              .append(words[i].substring(1).toLowerCase());
+    }
+    return result.toString();
+}
+```
+**Optimized Code:**
+```java
+String camelCase = Arrays.stream(s.split(" "))
+    .map(w -> Character.toUpperCase(w.charAt(0)) + w.substring(1).toLowerCase())
+    .collect(Collectors.joining(""));
+```
+
+---
+
+### **3️⃣ Find the First Non-Repeating Character**
+**Normal Code:**
+```java
+char firstUniqueChar(String s) {
+    Map<Character, Integer> count = new LinkedHashMap<>();
+    for (char c : s.toCharArray()) {
+        count.put(c, count.getOrDefault(c, 0) + 1);
+    }
+    for (char c : s.toCharArray()) {
+        if (count.get(c) == 1) return c;
+    }
+    return '_';
+}
+```
+**Optimized Code:**
+```java
+char firstUnique = s.chars().mapToObj(c -> (char) c)
+    .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))
+    .entrySet().stream().filter(e -> e.getValue() == 1)
+    .map(Map.Entry::getKey).findFirst().orElse('_');
+```
+
+---
+
+### **4️⃣ Convert a String to an Integer List**
+**Normal Code:**
+```java
+List<Integer> toIntList(String s) {
+    List<Integer> list = new ArrayList<>();
+    for (char c : s.toCharArray()) {
+        list.add(Character.getNumericValue(c));
+    }
+    return list;
+}
+```
+**Optimized Code:**
+```java
+List<Integer> intList = s.chars().map(Character::getNumericValue).boxed().collect(Collectors.toList());
+```
+
+---
+
+### **5️⃣ Find All Substrings of a String**
+**Normal Code:**
+```java
+List<String> getSubstrings(String s) {
+    List<String> substrings = new ArrayList<>();
+    for (int i = 0; i < s.length(); i++) {
+        for (int j = i + 1; j <= s.length(); j++) {
+            substrings.add(s.substring(i, j));
+        }
+    }
+    return substrings;
+}
+```
+**Optimized Code:**
+```java
+List<String> substrings = IntStream.range(0, s.length())
+    .mapToObj(i -> IntStream.range(i + 1, s.length() + 1)
+    .mapToObj(j -> s.substring(i, j)))
+    .flatMap(Function.identity())
+    .collect(Collectors.toList());
+```
+
+---
+
+
+
+
+
