@@ -13,6 +13,7 @@ Char Frequency Count – Use an int[256] array for quick frequency counting.
 
 
 Two Pointers & Sliding Window
+
 Palindrome Check – Use two pointers: one at the start, one at the end.
 Reverse Words in a String – Split, reverse, and join the words.
 Longest Substring Without Repeating Characters – Use a sliding window with a HashSet.
@@ -26,6 +27,7 @@ Count and Say Problem – Use recursion or iterative expansion.
 
 
 Pattern Matching
+
 Check if String Follows a Pattern – Use a HashMap to map characters to words.
 Z-Algorithm for Pattern Searching – Efficient way to find pattern occurrences in O(n).
 KMP Algorithm for Pattern Searching – Uses LPS array for fast matching.
@@ -35,6 +37,7 @@ Regular Expression Matching – Use DP to match . and * efficiently.
 
 
 Substring & Subsequence Problems
+
 Find the Smallest Window Containing Another String – Use sliding window + frequency array.
 Find the Longest Common Subsequence (LCS) – Use dynamic programming.
 Check if One String is a Subsequence of Another – Use two-pointer approach.
@@ -43,6 +46,7 @@ Generate All Subsequences – Use recursion or bitwise representation.
 
 
 String Compression & Encoding
+
 Run-Length Encoding – Compress "aaabb" to "a3b2".
 Decode a Run-Length Encoded String – Reverse the compression logic.
 Longest Run of a Character in a String – Track max frequency while iterating.
@@ -51,6 +55,7 @@ Count Binary Substrings – Count consecutive 0s and 1s in groups.
 
 
 Advanced String Transformations
+
 Remove Consecutive Duplicates – Use a stack to remove adjacent duplicates.
 Group Words with Same Characters – Use sorted strings as HashMap keys.
 Find Minimum Number of Steps to Make Two Strings Anagram – Count character differences.
@@ -59,12 +64,14 @@ Check If Two Strings Are One Edit Distance Apart – Consider insert, delete, re
 
 
 Palindrome Variations
+
 Check If String Can Be Rearranged to a Palindrome – At most one character should have an odd count.
 Make String Palindrome with Minimum Insertions – Use DP or two-pointer technique.
 Find Palindromic Subsequences – Use DP for counting.
 
 
 Lexicographical and Sorting Tricks
+
 Find the Next Lexicographical Permutation – Use the next permutation algorithm.
 Sort Characters in a String – Convert to char array and sort.
 Find the Smallest Lexicographical Rotation – Use Booth’s Algorithm.
@@ -72,5 +79,6 @@ Rearrange String So No Two Adjacent Characters Are Same – Use a max heap.
 
 
 Miscellaneous Tricks
+
 Find First Unique Character in a String – Use a HashMap or frequency array.
 Find All Possible Permutations of a String – Use backtracking.
