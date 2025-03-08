@@ -1,0 +1,133 @@
+1️⃣ Check if a number is even or odd
+java
+Copy code
+boolean isEven = (n & 1) == 0;
+✅ Explanation: If the last bit is 0, the number is even; if 1, it's odd.
+
+2️⃣ Multiply by 2 (Left Shift)
+java
+Copy code
+int doubleValue = n << 1;
+✅ Explanation: n << 1 shifts bits left, effectively multiplying n by 2.
+
+3️⃣ Divide by 2 (Right Shift)
+java
+Copy code
+int halfValue = n >> 1;
+✅ Explanation: n >> 1 shifts bits right, effectively dividing n by 2.
+
+4️⃣ Check if a number is a power of 2
+java
+Copy code
+boolean isPowerOfTwo = (n > 0) && (n & (n - 1)) == 0;
+✅ Explanation: A power of 2 has only one 1 in its binary form.
+
+5️⃣ Set the kth bit (Make it 1)
+java
+Copy code
+int newNumber = n | (1 << k);
+✅ Explanation: 1 << k creates a mask with 1 at the kth position.
+
+6️⃣ Unset the kth bit (Make it 0)
+java
+Copy code
+int newNumber = n & ~(1 << k);
+✅ Explanation: ~(1 << k) inverts the mask, and & clears the kth bit.
+
+7️⃣ Toggle the kth bit (Flip it)
+java
+Copy code
+int newNumber = n ^ (1 << k);
+✅ Explanation: XOR flips the kth bit (1 becomes 0, 0 becomes 1).
+
+8️⃣ Check if the kth bit is set
+java
+Copy code
+boolean isSet = (n & (1 << k)) != 0;
+✅ Explanation: If & with mask 1 << k is nonzero, the bit is set.
+
+9️⃣ Turn off the rightmost 1 bit
+java
+Copy code
+int newNumber = n & (n - 1);
+✅ Explanation: n - 1 flips the rightmost 1, and & removes it.
+
+🔟 Get the rightmost 1 bit (Isolate lowest set bit)
+java
+Copy code
+int lowestSetBit = n & -n;
+✅ Explanation: -n is ~n + 1, isolating the rightmost 1.
+
+1️⃣1️⃣ Count number of 1s in binary (Hamming Weight)
+java
+Copy code
+int count = Integer.bitCount(n);
+✅ Explanation: Integer.bitCount(n) counts 1s in n's binary representation.
+
+1️⃣2️⃣ Swap two numbers without using extra space
+java
+Copy code
+a ^= b; b ^= a; a ^= b;
+✅ Explanation: XOR swapping avoids temporary variables.
+
+1️⃣3️⃣ Convert lowercase to uppercase
+java
+Copy code
+char upper = (char) (ch & '_');
+✅ Explanation: '_' is 0b01011111, clearing the 6th bit.
+
+1️⃣4️⃣ Convert uppercase to lowercase
+java
+Copy code
+char lower = (char) (ch | ' ');
+✅ Explanation: ' ' is 0b00100000, setting the 6th bit.
+
+1️⃣5️⃣ Check if a number is a power of 4
+java
+Copy code
+boolean isPowerOfFour = (n > 0) && (n & (n - 1)) == 0 && (n & 0xAAAAAAAA) == 0;
+✅ Explanation: n must be a power of 2 and have a 1 at an odd position.
+
+1️⃣6️⃣ Reverse the bits of a number
+java
+Copy code
+int reversed = Integer.reverse(n);
+✅ Explanation: Integer.reverse(n) flips all bits.
+
+1️⃣7️⃣ Find the XOR of all numbers from 1 to n
+java
+Copy code
+int xorSum = (n % 4 == 0) ? n : (n % 4 == 1) ? 1 : (n % 4 == 2) ? n + 1 : 0;
+✅ Explanation: XOR pattern repeats every 4 numbers.
+
+1️⃣8️⃣ Find the single non-repeating number (XOR Trick)
+java
+Copy code
+int single = 0; for (int num : nums) single ^= num;
+✅ Explanation: a ⊕ a = 0, so all duplicates cancel out.
+
+1️⃣9️⃣ Find two unique numbers in an array where all others are duplicated
+java
+Copy code
+int xor = 0; for (int num : nums) xor ^= num;
+int diff = xor & -xor; // Rightmost different bit
+int a = 0, b = 0;
+for (int num : nums) {
+    if ((num & diff) == 0) a ^= num;
+    else b ^= num;
+}
+✅ Explanation: The diff bit separates two unique numbers.
+
+2️⃣0️⃣ Find the missing number in an array from [0, n]
+java
+Copy code
+int missing = n; for (int i = 0; i < n; i++) missing ^= i ^ nums[i];
+✅ Explanation: XOR all indices and values, missing number remains.
+
+🎯 Key Takeaways
+& → Check, clear, or isolate bits
+| → Set bits
+^ → Toggle bits or remove duplicates
+<< → Multiply by 2
+>> → Divide by 2
+~ → Negation (invert bits)
