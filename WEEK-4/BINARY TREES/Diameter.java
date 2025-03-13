@@ -14,7 +14,6 @@ public class Diameter {
         return Math.max(lefth,righth)+1;
     }
 }
-
 /*
  * Given the root of a binary tree, return the length of the diameter of the tree.
 
