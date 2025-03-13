@@ -58,3 +58,9 @@ Constraints:
 The number of nodes in the binary tree is in the range [1, 10^5].
 Each node's value is between [-10^4, 10^4].
  */
+/*
+ * so we basically have 2 ways to find the number of good nodes-
+ * 1)
+ * what we can actually do is go by the larger method in which we check for root.val being greater than or equal to the max and if
+ * it does then inccrease the count by 1;
+ */
